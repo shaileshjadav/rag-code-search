@@ -26,6 +26,19 @@ def embed_text(text):
         print("❌ Embedding request failed:", e)
         return None
 
+
+def chunk_code(content, chunk_size=300, overlap=50):
+    """
+    Splits code into overlapping chunks for better semantic search.
+    """
+    chunks = []
+    start = 0
+    while start < len(content):
+        end = min(len(content), start + chunk_size)
+        chunks.append(content[start:end])
+        start += chunk_size - overlap  # slide window
+    return chunks
+
 def index_repo(repo_path):
     repo_path = os.path.abspath(repo_path)  # ensure absolute path
     print(f"📂 Indexing repo at {repo_path}")
@@ -38,21 +51,27 @@ def index_repo(repo_path):
                 try:
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                         content = f.read()
-                    embedding = embed_text(content[:2000])  # limit text for small CPU cost
-                    symbols.append({
-                        "uri": file_path,
-                        "symbol": file,
-                        "content": content[:200],  # preview
-                        "embedding": embedding
-                    })
-                    print(f"✅ Indexed {file_path}")
+
+                    # 🔹 break file into chunks
+                    chunks = chunk_code(content)
+
+                    for i, chunk in enumerate(chunks):
+                        embedding = embed_text(chunk)  # your Gemini embedding call
+                        symbols.append({
+                            "uri": file_path,
+                            "symbol": f"{file}::chunk{i}",
+                            "content": chunk[:200],  # preview just snippet
+                            "embedding": embedding
+                        })
+                    print(f"✅ Indexed {file_path} into {len(chunks)} chunks")
+
                 except Exception as e:
                     print(f"⚠️ Could not read {file_path}: {e}")
 
     with open(LSIF_FILE, "w") as f:
         json.dump({"symbols": symbols}, f, indent=2)
 
-    print(f"🎉 Indexing complete! Stored {len(symbols)} files in {LSIF_FILE}")
+    print(f"🎉 Indexing complete! Stored {len(symbols)} code snippets in {LSIF_FILE}")
 
 def search_repo(query):
     if not os.path.exists(LSIF_FILE):
