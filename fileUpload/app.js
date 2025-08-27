@@ -1,28 +1,14 @@
 const express = require('express');
-const multer = require('multer');
-const cors = require('cors');
+console.log("test");
 
+/**
+ * Adds two numbers together.
+ * @param {number} a The first number.
+ * @param {number} b The second number.
+ * @returns {number} The sum of the two numbers.
+ **/
 const app = express();
 
-app.use(cors());
-
-const PORT = process.env.PORT || 5000;
-
-const storage = multer.diskStorage({
-    destination:'uploads',
-    filename:(req,file, cb) =>{
-        cb(null, Date.now()+'_'+file.originalname);
-    }
-})
-
-const upload = multer({storage})
-
-
-app.post("/upload", upload.array('files'), (req, res, next) =>{
-    res.status(200).json({msg:'success'});
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
-
-
-app.listen(PORT, ()=>{
-    console.log("Server listening on PORT", PORT);
-})

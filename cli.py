@@ -8,6 +8,9 @@ from google.genai import types
 LSIF_FILE = "lsif.json"
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/embeddings"
+import files_to_json
+import convert_lsif_index
+import generate_signatures
 
 def embed_text(text):
     if not OPENROUTER_API_KEY:
@@ -42,37 +45,10 @@ def chunk_code(content, chunk_size=300, overlap=50):
 def index_repo(repo_path):
     repo_path = os.path.abspath(repo_path)  # ensure absolute path
     print(f"📂 Indexing repo at {repo_path}")
-
-    symbols = []
-    for root, _, files in os.walk(repo_path):
-        for file in files:
-            if file.endswith((".py", ".js", ".ts", ".java", ".go", ".php", ".cpp", ".c")):
-                file_path = os.path.join(root, file)
-                try:
-                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                        content = f.read()
-
-                    # 🔹 break file into chunks
-                    chunks = chunk_code(content)
-
-                    for i, chunk in enumerate(chunks):
-                        embedding = embed_text(chunk)  # your Gemini embedding call
-                        symbols.append({
-                            "uri": file_path,
-                            "symbol": f"{file}::chunk{i}",
-                            "content": chunk[:200],  # preview just snippet
-                            "embedding": embedding
-                        })
-                    print(f"✅ Indexed {file_path} into {len(chunks)} chunks")
-
-                except Exception as e:
-                    print(f"⚠️ Could not read {file_path}: {e}")
-
-    with open(LSIF_FILE, "w") as f:
-        json.dump({"symbols": symbols}, f, indent=2)
-
-    print(f"🎉 Indexing complete! Stored {len(symbols)} code snippets in {LSIF_FILE}")
-
+    files_to_json.main(repo_path)
+    convert_lsif_index.main(repo_path)
+    generate_signatures.main(repo_path)
+    
 def search_repo(query):
     if not os.path.exists(LSIF_FILE):
         print("❌ No LSIF index found. Run `index` first.")

@@ -1,0 +1,10 @@
+{"file": "fileUpload/app.js", "start_line": 0, "end_line": 0, "code_snippet": "const express = require('express');", "hover_text": null, "type": "definition", "text": "express"}
+{"file": "fileUpload/app.js", "start_line": 9, "end_line": 9, "code_snippet": "const app = express();", "hover_text": null, "type": "definition", "text": "app"}
+{"file": "fileUpload/app.js", "start_line": 0, "end_line": 0, "code_snippet": "const express = require('express');", "hover_text": null, "type": "reference", "text": "require"}
+{"file": "fileUpload/app.js", "start_line": 1, "end_line": 1, "code_snippet": "console.log(\"test\");", "hover_text": null, "type": "reference", "text": "console"}
+{"file": "fileUpload/app.js", "start_line": 12, "end_line": 12, "code_snippet": "  console.log('Server is running on http://localhost:3000');", "hover_text": null, "type": "reference", "text": "console"}
+{"file": "fileUpload/app.js", "start_line": 1, "end_line": 1, "code_snippet": "console.log(\"test\");", "hover_text": null, "type": "reference", "text": "log"}
+{"file": "fileUpload/app.js", "start_line": 12, "end_line": 12, "code_snippet": "  console.log('Server is running on http://localhost:3000');", "hover_text": null, "type": "reference", "text": "log"}
+{"file": "fileUpload/app.js", "start_line": 11, "end_line": 11, "code_snippet": "app.listen(3000, () => {", "hover_text": null, "type": "reference", "text": "app"}
+{"file": "fileUpload/app.js", "start_line": 9, "end_line": 9, "code_snippet": "const app = express();", "hover_text": null, "type": "reference", "text": "express"}
+{"file": "fileUpload/app.js", "start_line": 11, "end_line": 11, "code_snippet": "app.listen(3000, () => {", "hover_text": null, "type": "reference", "text": "=>"}
