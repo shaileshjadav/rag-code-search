@@ -3,6 +3,7 @@ import os
 import json
 from pathlib import Path
 import subprocess
+from config import FOLDER_PATH, DATA_DIR
 
 def run_babel_parser(js_file_path: Path):
     """
@@ -53,11 +54,11 @@ def explore_directory(root_dir):
     return result
 
 
-def main(DATA_DIR):
+def main():
     # folder_path = os.getenv('QDRANT_PATH')
     output_file = Path(DATA_DIR) / "signatures.json"
 
-    files_data = explore_directory(DATA_DIR)
+    files_data = explore_directory(FOLDER_PATH)
 
     with open(output_file, 'w', encoding='utf-8') as json_file:
         json.dump(files_data, json_file, indent=2)

@@ -1,2 +1,4 @@
 demo-code-search
 node_modules
+express/
+__pycache__

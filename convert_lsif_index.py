@@ -2,16 +2,15 @@ import os.path
 from pathlib import Path
 import json
 from urllib.parse import urlparse
+from config import DATA_DIR
 
-# Ensure the data directory exists
-DATA_DIR = Path("./fileUpload")
-if not DATA_DIR.exists():
-    os.makedirs(DATA_DIR)
+# if not DATA_DIR.exists():
+#     os.makedirs(DATA_DIR)
 
 # This is the correct LSIF file path based on your previous examples.
 LSIF_INDEX = Path(DATA_DIR) / "dump.lsif"
 
-def convert(DATA_DIR):
+def convert():
     """
     Parses an LSIF dump file and extracts code snippets for definitions and references,
     including associated hover text.
@@ -67,7 +66,6 @@ def convert(DATA_DIR):
             range_data = all_vertices[range_id]
             
             doc_path = Path(urlparse(document["uri"]).path)
-
             try:
                 rel_path = doc_path.relative_to(Path(root_dir).absolute())
             except ValueError:
@@ -113,9 +111,8 @@ def convert(DATA_DIR):
             
     return entries
 
-def main(DATA_DIR):
-    files_data = convert(DATA_DIR)
-    
+def main():
+    files_data = convert()
     output_path = Path(DATA_DIR) / "qdrant_snippets.jsonl"
     with open(output_path, "w") as fp:
         for entry in files_data:
@@ -124,4 +121,4 @@ def main(DATA_DIR):
     print(f"Successfully processed {len(files_data)} entries and saved to {output_path}")
 
 if __name__ == '__main__':
-    main(DATA_DIR)
+    main()

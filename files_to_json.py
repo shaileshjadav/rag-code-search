@@ -3,6 +3,7 @@ import os
 import json
 from pathlib import Path
 import subprocess
+from config import FOLDER_PATH, DATA_DIR
 
 LANGUAGE_SERVERS = {
     "rs": "rust-analyzer",      # Rust
@@ -21,18 +22,16 @@ def get_language_server(language: str) -> str | None:
 def generate_lsif(repo_path: str, language: str):
     lang_server = get_language_server(language)
     if not lang_server:
-        raise ValueError(f"No LSIF indexer found for {file_path}")
-
+        raise ValueError(f"No LSIF indexer found for")
     # Example commands (different for each analyzer!)
     if lang_server == "jsserver":
-        cmd = ["scip-typescript index", repo_path, "--infer-tsconfig"]
+        cmd =  ["lsif-tsc", ' -p', '.']
     elif lang_server == "tsserver":
-        cmd = ["scip-typescript index", repo_path]
+        cmd = ["lsif-tsc", ' -p', '.']
     else:
         raise NotImplementedError(f"LSIF for {lang_server} not implemented yet")
-
     print(f"Running: {' '.join(cmd)}")
-    return subprocess.Popen(cmd, shell=True, cwd=repo_path)
+    return subprocess.run(cmd, cwd=repo_path, capture_output=True, text=True, check=True)
 
 def process_file(root_dir, file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
@@ -57,15 +56,15 @@ def explore_directory(root_dir):
     return result
 
 
-def main(DATA_DIR):
+def main():
     # folder_path = os.getenv('QDRANT_PATH')
     output_file = Path(DATA_DIR) / "rs_files.json"
 
-    files_data = explore_directory(DATA_DIR)
+    files_data = explore_directory(FOLDER_PATH)
     
-    full_path = os.path.join(DATA_DIR)
+    full_path = os.path.join(FOLDER_PATH)
 
-    language_server = generate_lsif(DATA_DIR, 'js')   
+    language_server = generate_lsif(FOLDER_PATH, 'js')   
 
     with open(output_file, 'w', encoding='utf-8') as json_file:
         json.dump(files_data, json_file, indent=2)
