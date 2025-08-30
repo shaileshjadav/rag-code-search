@@ -1,4 +1,4 @@
-import numpy as np
+
 from embeddings import get_embedding
 from searcher import CombinedSearcher
 

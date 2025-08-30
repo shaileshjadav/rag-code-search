@@ -7,8 +7,8 @@ import qdrant_client
 import json
 from embeddings import get_embedding
 
-from config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR, QDRANT_CODE_COLLECTION_NAME, QDRANT_URL
-# from code_search.model.encoder import UniXcoderEmbeddingsProvider
+from config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR, QDRANT_CODE_COLLECTION_NAME
+
 
 code_keys = [
     "code_snippet",
@@ -19,32 +19,15 @@ code_keys = [
 
 
 def encode_and_upload():
-    # client = qdrant_client.QdrantClient(
-    #     QDRANT_URL,
-    #     api_key=QDRANT_API_KEY,
-    #     prefer_grpc=True,
-    # )
-
     client = qdrant_client.QdrantClient(
-        url= QDRANT_URL
+        url=QDRANT_URL
     )
 
     collection_name = QDRANT_CODE_COLLECTION_NAME
     input_file = Path(DATA_DIR) / "qdrant_snippets.jsonl"
-    
-    # encoder = UniXcoderEmbeddingsProvider()
-
-    input_file = Path(DATA_DIR) / input_file
-    # output_file = Path(DATA_DIR) / f"{collection_name}.npy"
 
     if not input_file.exists():
         raise RuntimeError(f"File {input_file} does not exist. Skipping")
-
-    # if output_file.exists():
-    #     print(f"File {output_file} already exists. Skipping encoding.")
-    #     embeddings = np.load(str(output_file)).tolist()
-    # else:
-    # print(f"Preparing the output for {output_file}")
 
     embeddings = []
     with open(input_file, "r") as fp:
@@ -62,8 +45,6 @@ def encode_and_upload():
 
             embedding = get_embedding(body, docstring)
             embeddings.append(embedding)
-
-    # np.save(str(output_file), np.array(embeddings))
 
     payloads = []
     with open(input_file, "r") as fp:

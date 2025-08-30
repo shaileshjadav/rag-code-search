@@ -1,9 +1,6 @@
-import requests
 import os
 from ollama import Client
 
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1/embeddings"
 MODEL = "nomic-embed-text"  # local llm
 
 client = Client(
@@ -11,26 +8,6 @@ client = Client(
   headers={'x-some-header': 'some-value'}
 )
 
-def get_embedding(text: str, docstring:str):
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json"
-    }
-
-    payload = {
-        "model": MODEL,
-        "input": text
-    }
+def get_embedding(text: str, docstring: str):
     resp = client.embed(model=MODEL, input=text)
     return resp['embeddings'][0]
-    # if resp.status_code != 200:
-    #     print("❌ Error while embedding:", resp.status_code, resp.text)
-    #     return None
-
-    # try:
-        
-    #     data = resp.json()
-    #     return data["data"][0]["embedding"]
-    # except Exception as e:
-    #     print("❌ JSON decode error:", e, " Response:", resp.text[:200])
-    #     return None

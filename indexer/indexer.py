@@ -1,5 +1,5 @@
 import os
-import numpy as np
+
 from embeddings import get_embedding
 
 def read_repo_files(repo_path, exts=(".py", ".js", ".ts")):
@@ -24,4 +24,4 @@ def build_index(repo_path):
         emb = get_embedding(code)
         vectors.append(emb)
         metadata.append(fpath)
-    return np.array(vectors), metadata
+    return vectors, metadata

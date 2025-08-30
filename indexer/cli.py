@@ -1,11 +1,10 @@
 import os
 import json
 import argparse
-import requests
+
 
 LSIF_FILE = "lsif.json"
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-OPENROUTER_URL = "https://openrouter.ai/api/v1/embeddings"
+
 import files_to_json
 import convert_lsif_index
 import generate_signatures
@@ -15,35 +14,6 @@ import search
 from generate_lsif_index import generate_lsif
 from config import FOLDER_PATH
 
-# def embed_text(text):
-#     if not OPENROUTER_API_KEY:
-#         print("❌ Missing OPENROUTER_API_KEY env variable")
-#         return None
-
-#     client = genai.Client(api_key=OPENROUTER_API_KEY)
-
-#     try:
-#         response = client.models.embed_content(
-#             model='text-embedding-004',
-#             contents=text,
-#         )
-#         return response.embeddings[0].values
-#     except Exception as e:
-#         print("❌ Embedding request failed:", e)
-#         return None
-
-
-def chunk_code(content, chunk_size=300, overlap=50):
-    """
-    Splits code into overlapping chunks for better semantic search.
-    """
-    chunks = []
-    start = 0
-    while start < len(content):
-        end = min(len(content), start + chunk_size)
-        chunks.append(content[start:end])
-        start += chunk_size - overlap  # slide window
-    return chunks
 
 def index_repo(repo_path):
     repo_path = os.path.abspath(repo_path)  # ensure absolute path

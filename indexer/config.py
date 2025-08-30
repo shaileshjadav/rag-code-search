@@ -18,4 +18,4 @@ QDRANT_FILE_COLLECTION_NAME="code-files"
 ENCODER_NAME = "all-MiniLM-L6-v2"
 ENCODER_SIZE = 384
 
-FOLDER_PATH = './express'
+FOLDER_PATH = './fileUpload'
