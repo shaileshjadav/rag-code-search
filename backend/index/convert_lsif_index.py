@@ -2,7 +2,7 @@ import os.path
 from pathlib import Path
 import json
 from urllib.parse import urlparse
-from config import DATA_DIR
+from backend.config import DATA_DIR
 
 # if not DATA_DIR.exists():
 #     os.makedirs(DATA_DIR)

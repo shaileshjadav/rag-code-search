@@ -1,8 +1,8 @@
 import json
 from typing import List
 
-from config import QDRANT_CODE_COLLECTION_NAME, QDRANT_URL
-from embeddings import get_embedding
+from backend.config import QDRANT_CODE_COLLECTION_NAME, QDRANT_URL
+from backend.helper.embeddings import get_embedding
 import qdrant_client
 
 class CodeSearcher:

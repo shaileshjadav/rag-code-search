@@ -3,7 +3,7 @@ import sys
 import os
 import shutil
 from pathlib import Path
-from config import DATA_DIR, FOLDER_PATH
+from backend.config import DATA_DIR, FOLDER_PATH
 
 LANGUAGE_SERVERS = {
     # "rs": "rust-analyzer",      # Rust

@@ -1,7 +1,6 @@
 {
   "name": "tools",
   "version": "1.0.0",
-  "description": "",
   "main": "babelParser.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,5 +12,6 @@
     "@babel/parser": "^7.28.3",
     "@babel/types": "^7.28.2",
     "@sourcegraph/lsif-tsc": "^0.7.6"
-  }
+  },
+  "description": ""
 }

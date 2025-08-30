@@ -6,11 +6,17 @@ from qdrant_client import QdrantClient, models
 from qdrant_client.models import Distance, VectorParams
 from sentence_transformers import SentenceTransformer
 
-from code_search.config import DATA_DIR, QDRANT_URL, QDRANT_API_KEY, QDRANT_NLU_COLLECTION_NAME, ENCODER_NAME, \
+from backend.config import DATA_DIR, QDRANT_URL, QDRANT_API_KEY, QDRANT_NLU_COLLECTION_NAME, ENCODER_NAME, \
     ENCODER_SIZE
-from code_search.index.textifier import textify
 
 file_name = Path(DATA_DIR) / "structures.json"
+
+
+def textify(row):
+    """Convert a row to text representation"""
+    if isinstance(row, dict):
+        return str(row.get('text', '')) + ' ' + str(row.get('name', ''))
+    return str(row)
 
 
 def iter_batch(iterable, batch_size=64):

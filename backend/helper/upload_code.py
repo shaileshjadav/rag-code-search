@@ -5,9 +5,9 @@ from qdrant_client.http import models as rest
 import qdrant_client
 # import numpy as np
 import json
-from embeddings import get_embedding
+from backend.helper.embeddings import get_embedding
 
-from config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR, QDRANT_CODE_COLLECTION_NAME
+from backend.config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR, QDRANT_CODE_COLLECTION_NAME
 
 
 code_keys = [

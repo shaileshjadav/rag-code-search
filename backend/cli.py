@@ -1,28 +1,25 @@
 import os
-import json
 import argparse
 
 
 LSIF_FILE = "lsif.json"
 
-import files_to_json
-import convert_lsif_index
-import generate_signatures
-import embeddings
-from upload_code import encode_and_upload
-import search
-from generate_lsif_index import generate_lsif
-from config import FOLDER_PATH
+import backend.index.files_to_json as files_to_json
+import backend.index.convert_lsif_index as convert_lsif_index
+import backend.index.generate_signatures as generate_signatures
+from backend.helper.upload_code import encode_and_upload
+import backend.search.search
+from backend.index.generate_lsif_index import generate_lsif
+from backend.config import FOLDER_PATH
 
 
 def index_repo(repo_path):
     repo_path = os.path.abspath(repo_path)  # ensure absolute path
     print(f"📂 Indexing repo at {repo_path}")
-    # TODO: as future scope
-    # files_to_json.main()
+    files_to_json.main()
     generate_lsif(repo_path, 'js')
     convert_lsif_index.main()
-    # generate_signatures.main()
+    generate_signatures.main()
     # encode_and_upload()
 
 
@@ -42,4 +39,4 @@ if __name__ == "__main__":
     if args.command == "index":
         index_repo(args.repo)
     elif args.command == "search":
-        search.search(args.query)
+        backend.search.search.search(args.query)

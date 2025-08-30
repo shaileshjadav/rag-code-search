@@ -2,10 +2,10 @@ import os.path
 import os
 import json
 from pathlib import Path
-import subprocess
-from config import FOLDER_PATH, DATA_DIR
+from backend.config import DATA_DIR, FOLDER_PATH
 
-
+print(FOLDER_PATH)
+print(DATA_DIR)
 def process_file(root_dir, file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
         code_lines = file.readlines()
@@ -30,7 +30,6 @@ def explore_directory(root_dir):
 
 
 def main():
-    # folder_path = os.getenv('QDRANT_PATH')
     output_file = Path(DATA_DIR) / "rs_files.json"
 
     files_data = explore_directory(FOLDER_PATH)
@@ -40,5 +39,5 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as json_file:
         json.dump(files_data, json_file, indent=2)
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

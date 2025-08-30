@@ -3,7 +3,8 @@ import os
 import json
 from pathlib import Path
 import subprocess
-from config import FOLDER_PATH, DATA_DIR
+from backend.config import FOLDER_PATH, DATA_DIR, SUPPORTED_LANGUAGES
+
 
 def run_babel_parser(js_file_path: Path):
     """
@@ -13,7 +14,7 @@ def run_babel_parser(js_file_path: Path):
     # Define the command to run
     # Ensure 'node' is in your system's PATH
     # Ensure the babel_parser.js file is in the same directory
-    cmd = ["node", "tools/babel_parser.js", str(js_file_path)]
+    cmd = ["node", "backend/tools/babel_parser.js", str(js_file_path)]
     
     try:
         # Run the subprocess and capture the standard output
@@ -37,20 +38,37 @@ def run_babel_parser(js_file_path: Path):
 
 
 def process_file(root_dir, file_path):
-    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
-        code_lines = file.readlines()
-        relative_path = os.path.relpath(file_path, root_dir)
-        parsed_data = run_babel_parser(file_path)
-        return parsed_data
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+            code_lines = file.readlines()
+            relative_path = os.path.relpath(file_path, root_dir)
+            print(f"Processing: {relative_path}")
+            parsed_data = run_babel_parser(file_path)
+            if parsed_data is None:
+                print(f"Warning: Failed to parse {relative_path}")
+                return None
+            return parsed_data
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        return None
 
 def explore_directory(root_dir):
     result = []
+    print(f"Exploring directory: {root_dir}")
+    print(f"Looking for files with extensions: {SUPPORTED_LANGUAGES}")
+    
     for foldername, subfolders, filenames in os.walk(root_dir):
         for filename in filenames:
             file_path = os.path.join(foldername, filename)
-            if file_path.endswith((".py", ".js", ".ts", ".java", ".go", ".php", ".cpp", ".c")):
-                print(f"Processing file: {file_path}")
-                result.append(process_file(root_dir, file_path)) 
+            if file_path.endswith(tuple(SUPPORTED_LANGUAGES)):
+                print(f"Found file: {file_path}")
+                parsed_data = process_file(root_dir, file_path)
+                if parsed_data is not None:
+                    result.append(parsed_data)
+                else:
+                    print(f"Skipping {file_path} due to parsing error")
+    
+    print(f"Total files processed successfully: {len(result)}")
     return result
 
 
@@ -63,5 +81,5 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as json_file:
         json.dump(files_data, json_file, indent=2)
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,6 @@
 
-from embeddings import get_embedding
-from searcher import CombinedSearcher
+from backend.helper.embeddings import get_embedding
+from backend.search.searcher import CombinedSearcher
 
 searcher = CombinedSearcher()
 
