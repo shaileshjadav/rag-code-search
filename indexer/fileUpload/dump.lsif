@@ -1,12 +1,12 @@
 {"id":1,"type":"vertex","label":"metaData","version":"0.4.3","projectRoot":"file:///home/shailesh/coding/projects/repo-search","positionEncoding":"utf-16","toolInfo":{"name":"lsif-tsc","args":["-p","."],"version":"0.7.6"}}
 {"id":2,"type":"vertex","label":"project","kind":"typescript"}
 {"id":3,"type":"vertex","label":"$event","kind":"begin","scope":"project","data":2}
-{"id":4,"type":"vertex","label":"document","uri":"file:///home/shailesh/coding/projects/repo-search/fileUpload/app.js","languageId":"typescript"}
+{"id":4,"type":"vertex","label":"document","uri":"file:///home/shailesh/coding/projects/repo-search/indexer/fileUpload/app.js","languageId":"typescript"}
 {"id":5,"type":"vertex","label":"$event","kind":"begin","scope":"document","data":4}
 {"id":6,"type":"vertex","label":"resultSet"}
 {"id":7,"type":"vertex","label":"resultSet"}
 {"id":8,"type":"edge","label":"next","outV":7,"inV":6}
-{"id":9,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"q7+ElrnEQzw3UUQ8bC0R+Q=="}
+{"id":9,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"5HVmn6OmhpWGdnhHDTWDZQ=="}
 {"id":10,"type":"edge","label":"moniker","outV":7,"inV":9}
 {"id":11,"type":"vertex","label":"range","start":{"line":0,"character":6},"end":{"line":0,"character":13},"tag":{"type":"definition","text":"express","kind":7,"fullRange":{"start":{"line":0,"character":6},"end":{"line":0,"character":34}}}}
 {"id":12,"type":"edge","label":"next","outV":11,"inV":7}
@@ -36,7 +36,7 @@
 {"id":36,"type":"vertex","label":"range","start":{"line":1,"character":8},"end":{"line":1,"character":11},"tag":{"type":"reference","text":"log"}}
 {"id":37,"type":"edge","label":"next","outV":36,"inV":29}
 {"id":38,"type":"vertex","label":"resultSet"}
-{"id":39,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"GSkygRMcoCjTd2eboGsY1Q=="}
+{"id":39,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"US9zyrzBIBG0vh2apBsLQQ=="}
 {"id":40,"type":"edge","label":"moniker","outV":38,"inV":39}
 {"id":41,"type":"vertex","label":"range","start":{"line":9,"character":6},"end":{"line":9,"character":9},"tag":{"type":"definition","text":"app","kind":7,"fullRange":{"start":{"line":9,"character":6},"end":{"line":9,"character":21}}}}
 {"id":42,"type":"edge","label":"next","outV":41,"inV":38}
@@ -47,7 +47,7 @@
 {"id":47,"type":"vertex","label":"range","start":{"line":11,"character":0},"end":{"line":11,"character":3},"tag":{"type":"reference","text":"app"}}
 {"id":48,"type":"edge","label":"next","outV":47,"inV":38}
 {"id":49,"type":"vertex","label":"resultSet"}
-{"id":50,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"hsGxVX68WRszElle0pDEvA=="}
+{"id":50,"type":"vertex","label":"moniker","kind":"local","scheme":"tsc","identifier":"A12fvvCnuEFTsdBpvU5BMw=="}
 {"id":51,"type":"edge","label":"moniker","outV":49,"inV":50}
 {"id":52,"type":"vertex","label":"range","start":{"line":11,"character":20},"end":{"line":11,"character":22},"tag":{"type":"reference","text":"=>"}}
 {"id":53,"type":"edge","label":"next","outV":52,"inV":49}
