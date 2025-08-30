@@ -12,7 +12,7 @@ import generate_signatures
 import embeddings
 from upload_code import encode_and_upload
 import search
-from generate_lsif_index import run_lsif_indexer
+from generate_lsif_index import generate_lsif
 from config import FOLDER_PATH
 
 # def embed_text(text):
@@ -50,11 +50,10 @@ def index_repo(repo_path):
     print(f"📂 Indexing repo at {repo_path}")
     # TODO: as future scope
     # files_to_json.main()
-    # TODO: 
-    # run_lsif_indexer(FOLDER_PATH)
+    generate_lsif(repo_path, 'js')
     convert_lsif_index.main()
     # generate_signatures.main()
-    encode_and_upload()
+    # encode_and_upload()
 
 
 
