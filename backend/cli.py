@@ -11,6 +11,7 @@ from backend.helper.upload_code import encode_and_upload
 import backend.search.search
 from backend.index.generate_lsif_index import generate_lsif
 from backend.config import FOLDER_PATH
+from backend.helper.upload_signatures import upload_signatures
 
 
 def index_repo(repo_path):
@@ -20,7 +21,8 @@ def index_repo(repo_path):
     generate_lsif(repo_path, 'js')
     convert_lsif_index.main()
     generate_signatures.main()
-    # encode_and_upload()
+    encode_and_upload()
+    upload_signatures()
 
 
 

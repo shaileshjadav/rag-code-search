@@ -13,7 +13,7 @@ const code = fs.readFileSync(filePath, 'utf8');
 
 try {
     const ast = parser.parse(code, {
-        // sourceType: "module",
+        sourceType: "module",
         plugins: ["jsx", "typescript", "classProperties"] // Add plugins as needed
     });
     

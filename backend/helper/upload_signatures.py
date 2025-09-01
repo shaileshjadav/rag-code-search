@@ -4,19 +4,14 @@ from pathlib import Path
 import tqdm
 from qdrant_client import QdrantClient, models
 from qdrant_client.models import Distance, VectorParams
-from sentence_transformers import SentenceTransformer
 
 from backend.config import DATA_DIR, QDRANT_URL, QDRANT_API_KEY, QDRANT_NLU_COLLECTION_NAME, ENCODER_NAME, \
     ENCODER_SIZE
+from backend.helper.textify import textify_ast_node
 
-file_name = Path(DATA_DIR) / "structures.json"
+from backend.helper.embeddings import get_embedding
 
-
-def textify(row):
-    """Convert a row to text representation"""
-    if isinstance(row, dict):
-        return str(row.get('text', '')) + ' ' + str(row.get('name', ''))
-    return str(row)
+file_name = Path(DATA_DIR) / "signatures.json"
 
 
 def iter_batch(iterable, batch_size=64):
@@ -32,20 +27,19 @@ def iter_batch(iterable, batch_size=64):
 
 def load_records():
     with open(file_name, "r") as fp:
-        for line in fp:
-            row = json.loads(line)
+        data = json.load(fp)
+        for row in data:
             yield row
 
 
 def encode(sentence_transformer_name=ENCODER_NAME):
-    model = SentenceTransformer(sentence_transformer_name)
     for batch in iter_batch(load_records()):
-        texts = [textify(row) for row in batch]
-        embeddings = model.encode(texts).tolist()
+        texts = [textify_ast_node(row) for row in batch]
+        embeddings = [get_embedding(text, "") for text in texts]
         yield from embeddings
 
 
-def upload():
+def upload_signatures():
     collection_name = QDRANT_NLU_COLLECTION_NAME
 
     client = QdrantClient(
@@ -79,4 +73,4 @@ def upload():
 
 
 if __name__ == '__main__':
-    upload()
+    upload_signatures()

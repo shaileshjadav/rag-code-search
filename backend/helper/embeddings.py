@@ -1,7 +1,8 @@
 import os
 from ollama import Client
+from backend.config import ENCODER_NAME
 
-MODEL = "nomic-embed-text"  # local llm
+MODEL = ENCODER_NAME  # local llm
 
 client = Client(
   host='http://127.0.0.1:11434',

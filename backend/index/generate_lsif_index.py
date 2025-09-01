@@ -21,7 +21,7 @@ def generate_lsif(repo_path: str, language: str):
         raise ValueError(f"No LSIF indexer found for {language}")
     # Example commands (different for each analyzer!)
     if lang_server == "jsserver":
-        cmd = ["lsif-tsc", "-p", "."]
+        cmd = ["lsif-tsc", "**/*.js", "--AllowJs --checkJs"]
     elif lang_server == "tsserver":
         cmd = ["lsif-tsc", "-p", "."]
     else:
