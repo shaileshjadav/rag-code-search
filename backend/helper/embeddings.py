@@ -10,5 +10,5 @@ client = Client(
 )
 
 def get_embedding(text: str, docstring: str):
-    resp = client.embed(model=MODEL, input=text)
-    return resp['embeddings'][0]
+    resp = client.embeddings(model=MODEL, prompt=text)
+    return resp.embedding
