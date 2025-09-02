@@ -45,7 +45,7 @@ def upload_signatures():
     client = QdrantClient(
         QDRANT_URL,
         api_key=QDRANT_API_KEY,
-        prefer_grpc=True,
+        prefer_grpc=False,
     )
 
     print(f"Recreating the collection {collection_name}")

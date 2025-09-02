@@ -8,7 +8,6 @@ import backend.index.files_to_json as files_to_json
 import backend.index.convert_lsif_index as convert_lsif_index
 import backend.index.generate_signatures as generate_signatures
 from backend.helper.upload_code import encode_and_upload
-import backend.search.search
 from backend.index.generate_lsif_index import generate_lsif
 from backend.config import FOLDER_PATH
 from backend.helper.upload_signatures import upload_signatures
@@ -40,5 +39,5 @@ if __name__ == "__main__":
 
     if args.command == "index":
         index_repo(args.repo)
-    elif args.command == "search":
-        backend.search.search.search(args.query)
+    # elif args.command == "search":
+    #     backend.search.search.search(args.query)

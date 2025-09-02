@@ -61,7 +61,6 @@ def explore_directory(root_dir):
         for filename in filenames:
             file_path = os.path.join(foldername, filename)
             if file_path.endswith(tuple(SUPPORTED_LANGUAGES)):
-                print(f"Found file: {file_path}")
                 parsed_data = process_file(root_dir, file_path)
                 if parsed_data is not None:
                     result.append(parsed_data)
