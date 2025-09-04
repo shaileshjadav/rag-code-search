@@ -2,6 +2,7 @@ const parser = require('@babel/parser');
 const t = require('@babel/types');
 const fs = require('fs');
 const path = require('path');
+const traverse = require('@babel/traverse').default;
 
 const filePath = process.argv[2];
 if (!filePath) {
@@ -17,32 +18,29 @@ try {
         plugins: ["jsx", "typescript", "classProperties"] // Add plugins as needed
     });
     
-    console.log(JSON.stringify(ast));
 
     const results = [];
     const fileName = path.basename(filePath);
 
-    // t.traverseFast(ast, {
-    //     FunctionDeclaration(node) {
-    //         results.push({
-    //             file_path: filePath,
-    //             file_name: fileName,
-    //             struct_name: "function",
-    //             snippet: code.substring(node.start, node.end)
-    //         });
-    //     },
-    //     ClassDeclaration(node) {
-    //         results.push({
-    //             file_path: filePath,
-    //             file_name: fileName,
-    //             struct_name: "class",
-    //             snippet: code.substring(node.start, node.end)
-    //         });
-    //     }
-    //     // You can add more node types like VariableDeclaration, etc.
-    // });
-
-    // console.log((results, null, 2));
+    traverse(ast, {
+        FunctionDeclaration(p) {
+          results.push({
+            file_path: filePath,
+            file_name: fileName,
+            struct_name: 'function',
+            snippet: code.substring(p.node.start, p.node.end),
+          });
+        },
+        ClassDeclaration(p) {
+          results.push({
+            file_path: filePath,
+            file_name: fileName,
+            struct_name: 'class',
+            snippet: code.substring(p.node.start, p.node.end),
+          });
+        },
+      });
+    console.log(JSON.stringify(results));
 
 } catch (e) {
     console.error(`Error parsing file ${filePath}: ${e.message}`);
