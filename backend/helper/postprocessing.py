@@ -40,7 +40,6 @@ def merge_search_results(code_search_result: List[dict], nlu_search_result: List
     code_search_result_by_file = defaultdict(list)
     for hit in code_search_result:
         code_search_result_by_file[hit["file"]].append(hit)
-    print(nlu_search_result)
     for nlu_search_hit in nlu_search_result:
         file = nlu_search_hit["context"]["file_path"]
         if file in code_search_result_by_file:

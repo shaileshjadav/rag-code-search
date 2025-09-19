@@ -23,7 +23,8 @@ def generate_lsif(repo_path: str, language: str):
     # Correct command structure for lsif-tsc
     if lang_server == "jsserver":
         # For JavaScript files, we need to use shell=True for glob patterns
-        cmd = "lsif-tsc **/*.js --allowJs --checkJs"
+        # cmd  = 'lsif-tsc $(find . -name "*.js") --AllowJs --checkJs'
+        cmd  = 'lsif-tsc $(find . -type f \( -name "*.js" -o -name "*.jsx" \)) --AllowJs --checkJs' # js or jsx 
     elif lang_server == "tsserver":
         # For TypeScript projects with tsconfig.json
         cmd = ["lsif-tsc", "-p", "."]
@@ -36,7 +37,7 @@ def generate_lsif(repo_path: str, language: str):
     try:
         result = subprocess.run(cmd, cwd=repo_path, capture_output=True, text=True, shell=True, check=True)
         print(f"Command completed successfully")
-        print(f"STDOUT: {result.stdout}")
+        print(f"STDOUT: {result}")
         if result.stderr:
             print(f"STDERR: {result.stderr}")
     except subprocess.CalledProcessError as e:

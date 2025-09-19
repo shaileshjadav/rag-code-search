@@ -63,7 +63,8 @@ def explore_directory(root_dir):
             if file_path.endswith(tuple(SUPPORTED_LANGUAGES)):
                 parsed_data = process_file(root_dir, file_path)
                 if parsed_data is not None:
-                    result.append(parsed_data)
+                    for obj in parsed_data:
+                        result.append(obj)
                 else:
                     print(f"Skipping {file_path} due to parsing error")
     

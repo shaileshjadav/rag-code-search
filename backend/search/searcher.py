@@ -54,9 +54,9 @@ class CombinedSearcher:
 
     def search(self, query, limit=5, code_limit=20) -> List[dict]:
         code_res = self.code_searcher.search(query, limit=code_limit)
+        
         nlu_res = self.nlu_searcher.search(query, limit=limit)
-        # return merge_search_results(code_res, nlu_res)
-        return code_res
+        return merge_search_results(code_res, nlu_res)
 
 
 if __name__ == '__main__':

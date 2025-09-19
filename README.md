@@ -33,6 +33,11 @@ pip install -r backend/requirements.txt
 npm install -g lsif-tsc
 ```
 
+4. Start HTTP server:
+```bash
+python3 -m  backend.app
+```
+
 ## Usage
 
 ### Index a Repository

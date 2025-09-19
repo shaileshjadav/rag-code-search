@@ -2,6 +2,7 @@ import os
 from ollama import Client
 from backend.config import ENCODER_NAME
 
+
 MODEL = ENCODER_NAME  # local llm
 
 client = Client(

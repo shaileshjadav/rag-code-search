@@ -18,5 +18,5 @@ QDRANT_FILE_COLLECTION_NAME="code-files"
 ENCODER_NAME = "all-minilm:l6-v2"
 ENCODER_SIZE = 384
 
-FOLDER_PATH = './backend/dom-unique-selector'
-SUPPORTED_LANGUAGES = [ '.js', '.ts']
+FOLDER_PATH = './backend/twitter-fullstack'
+SUPPORTED_LANGUAGES = [ '.js', '.ts', '.jsx', '.tsx']

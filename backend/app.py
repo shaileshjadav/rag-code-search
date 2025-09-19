@@ -1,6 +1,8 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from starlette.staticfiles import StaticFiles
 
 from backend.config import ROOT_DIR
@@ -13,6 +15,13 @@ app = FastAPI()
 searcher = CombinedSearcher()
 get_file = FileGet()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],            # List of allowed origins
+    allow_credentials=True,           # Allow cookies/auth headers
+    allow_methods=["*"],              # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],              # Allow all headers
+)
 
 @app.get("/api/search")
 async def search(query: str):

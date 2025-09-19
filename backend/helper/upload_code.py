@@ -52,7 +52,6 @@ def encode_and_upload():
             line_dict = json.loads(line)
             payloads.append(line_dict)
 
-    print(f"Embeddings shape: ({len(embeddings)}, {len(embeddings[0])})")
 
     print(f"Recreating the collection {collection_name}")
     client.recreate_collection(
