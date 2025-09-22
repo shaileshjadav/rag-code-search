@@ -29,11 +29,11 @@ export const useGetSearchResult = () => {
   const [error, setError] = useMountedState<string | null>(null);
   const [loading, setLoading] = useMountedState<boolean>(false);
 
-  const getSearch = async (query: string) => {
+  const getSearch = async (query: string, projectRepo: string) => {
     try {
       setLoading(true);
       setError(null);
-      const res = await getSearchResult({ query });
+      const res = await getSearchResult({ query, projectRepo });
 
       switch (res.status) {
         case StatusCodes.OK: {

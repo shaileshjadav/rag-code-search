@@ -3,7 +3,7 @@ import sys
 import os
 import shutil
 from pathlib import Path
-from backend.config import DATA_DIR, FOLDER_PATH
+from backend.config import DATA_DIR, TEST_FOLDER_PATH
 
 LANGUAGE_SERVERS = {
     # "rs": "rust-analyzer",      # Rust
@@ -27,7 +27,8 @@ def generate_lsif(repo_path: str, language: str):
         cmd  = 'lsif-tsc $(find . -type f \( -name "*.js" -o -name "*.jsx" \)) --AllowJs --checkJs' # js or jsx 
     elif lang_server == "tsserver":
         # For TypeScript projects with tsconfig.json
-        cmd = ["lsif-tsc", "-p", "."]
+        # cmd = ["lsif-tsc", "-p", "."]
+        cmd = 'lsif-tsc $(find . -type f \( -name "*.ts" -o -name "*.tsx" \))'
     else:
         raise NotImplementedError(f"LSIF for {lang_server} not implemented yet")
     
@@ -66,13 +67,13 @@ if __name__ == '__main__':
     # Define the directory where your TypeScript project is located.
     # Replace this path with the actual path to your project.
     # Check if the directory exists before attempting to run the command.
-    if not os.path.isdir(FOLDER_PATH):
-        print(f"Error: Directory not found at '{FOLDER_PATH}'")
+    if not os.path.isdir(TEST_FOLDER_PATH):
+        print(f"Error: Directory not found at '{TEST_FOLDER_PATH}'")
         sys.exit(1)
 
     try:
         # Call the function with the target directory
-        stdout, stderr = generate_lsif(FOLDER_PATH, 'js')
+        stdout, stderr = generate_lsif(TEST_FOLDER_PATH, 'js')
 
         # Print the results from the function call
         print("\n--- Command Output (STDOUT) ---")

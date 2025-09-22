@@ -5,13 +5,17 @@ import tqdm
 from qdrant_client import QdrantClient, models
 from qdrant_client.models import Distance, VectorParams
 
-from backend.config import DATA_DIR, QDRANT_URL, QDRANT_API_KEY, QDRANT_NLU_COLLECTION_NAME, ENCODER_NAME, \
+from backend.config import DATA_DIR, QDRANT_URL, QDRANT_API_KEY, ENCODER_NAME, \
     ENCODER_SIZE
 from backend.helper.textify import textify
 
 from backend.helper.embeddings import get_embedding
 
 file_name = Path(DATA_DIR) / "signatures.json"
+
+# function to get collection name for upload_code 
+def get_collection_name(repo_name):
+    return repo_name+"_signatures"
 
 
 def iter_batch(iterable, batch_size=64):
@@ -39,8 +43,9 @@ def encode(sentence_transformer_name=ENCODER_NAME):
         yield from embeddings
 
 
-def upload_signatures():
-    collection_name = QDRANT_NLU_COLLECTION_NAME
+def upload_signatures(repo_name):
+    # collection name is equals to repo_name for multiple projects supports
+    collection_name = get_collection_name(repo_name)
 
     client = QdrantClient(
         QDRANT_URL,

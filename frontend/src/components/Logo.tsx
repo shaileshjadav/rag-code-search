@@ -4,6 +4,6 @@ export interface LogoProps extends React.ComponentPropsWithoutRef<"svg"> {
 
 export function Logo({ size, ...others }: LogoProps) {
   return (
-    <h1>Code search with AI</h1>
+    <h1>Code Explorer</h1>
   );
 }

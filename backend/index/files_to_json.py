@@ -2,10 +2,9 @@ import os.path
 import os
 import json
 from pathlib import Path
-from backend.config import DATA_DIR, FOLDER_PATH
+from backend.config import DATA_DIR
 
-print(FOLDER_PATH)
-print(DATA_DIR)
+
 def process_file(root_dir, file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
         code_lines = file.readlines()
@@ -29,12 +28,10 @@ def explore_directory(root_dir):
     return result
 
 
-def main():
+def main(repo_path):
     output_file = Path(DATA_DIR) / "rs_files.json"
 
-    files_data = explore_directory(FOLDER_PATH)
-    
-    full_path = os.path.join(FOLDER_PATH)
+    files_data = explore_directory(repo_path)
 
     with open(output_file, 'w', encoding='utf-8') as json_file:
         json.dump(files_data, json_file, indent=2)

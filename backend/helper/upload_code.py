@@ -7,7 +7,7 @@ import qdrant_client
 import json
 from backend.helper.embeddings import get_embedding
 
-from backend.config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR, QDRANT_CODE_COLLECTION_NAME
+from backend.config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR
 
 
 code_keys = [
@@ -17,13 +17,17 @@ code_keys = [
     "name",
 ]
 
+# function to get collection name for upload_code 
+def get_collection_name(repo_name):
+    return repo_name+"_code"
 
-def encode_and_upload():
+def encode_and_upload(repo_name):
     client = qdrant_client.QdrantClient(
         url=QDRANT_URL
     )
-
-    collection_name = QDRANT_CODE_COLLECTION_NAME
+    
+    # collection name is equals to repo_name for multiple projects supports
+    collection_name = get_collection_name(repo_name)
     input_file = Path(DATA_DIR) / "qdrant_snippets.jsonl"
 
     if not input_file.exists():

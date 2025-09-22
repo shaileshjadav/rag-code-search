@@ -9,20 +9,27 @@ import backend.index.convert_lsif_index as convert_lsif_index
 import backend.index.generate_signatures as generate_signatures
 from backend.helper.upload_code import encode_and_upload
 from backend.index.generate_lsif_index import generate_lsif
-from backend.config import FOLDER_PATH
 from backend.helper.upload_signatures import upload_signatures
+from backend.config import DATA_DIR
 
 
 def index_repo(repo_path):
-    repo_path = os.path.abspath(repo_path)  # ensure absolute path
-    print(f"📂 Indexing repo at {repo_path}")
-    files_to_json.main()
-    generate_lsif(repo_path, 'js')
+    repo_abs_path = os.path.abspath(repo_path)  # ensure absolute path
+    repo_name = os.path.basename(repo_path)
+    print(f"📂 Indexing repo {repo_name} at {repo_path}")
+    files_to_json.main(repo_path)
+    generate_lsif(repo_abs_path, 'ts')
     convert_lsif_index.main()
-    generate_signatures.main()
-    encode_and_upload()
-    upload_signatures()
+    generate_signatures.main(repo_path)
+    encode_and_upload(repo_name)
+    upload_signatures(repo_name)
 
+def clean_data_files():
+    ## iterate all files in data directory excluding .keep file
+    for file in os.listdir(DATA_DIR):
+        if file != ".keep":
+            print(f"Removing {file}")
+            os.remove(os.path.join(DATA_DIR, file))
 
 
 if __name__ == "__main__":
@@ -38,6 +45,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.command == "index":
+        clean_data_files()
         index_repo(args.repo)
     # elif args.command == "search":
     #     backend.search.search.search(args.query)

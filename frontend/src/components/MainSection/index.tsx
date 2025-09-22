@@ -37,16 +37,16 @@ export default function Main() {
   const handleSubmit = () => {
     resetData();
     if (query) {
-      getSearch(query);
+      getSearch(query, projectRepo);
       setSearchParams({ query });
     }
   };
 
   useEffect(() => {
-    if(query === ""){
-        resetData();
+    if (query === "") {
+      resetData();
     }
-  })
+  });
   const selectData = useMemo(
     () => [
       { value: "dom-unique-selector", label: "Dom Unique selector" },
@@ -54,14 +54,13 @@ export default function Main() {
     ],
     []
   );
-  
+
   useEffect(() => {
     // set first item by default
     if (!projectRepo && selectData.length > 0) {
       setProjectRepo(selectData[0].value);
     }
   }, [projectRepo, selectData, setProjectRepo]);
-  
 
   const select = (
     <>
@@ -94,7 +93,7 @@ export default function Main() {
       </Button>
     </>
   );
-  
+
   return (
     <Container size={"md"}>
       <TextInput
@@ -106,7 +105,9 @@ export default function Main() {
         value={query}
         pt={data || loading ? "1rem" : "5rem"}
         required
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.currentTarget.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          setQuery(event.currentTarget.value)
+        }
         onKeyDown={getHotkeyHandler([["Enter", handleSubmit]])}
         classNames={{ input: classes.input }}
         rightSection={select}
@@ -125,13 +126,14 @@ export default function Main() {
             <FileTree data={data} />
           </Box>
           <Box pt={"md"} className={classes.codeDisplayArea}>
-            {projectRepo && data?.result.map((item) => (
-              <CodeContainer
-                {...item}
-                projectRepo = {projectRepo}
-                key={`${item.context.snippet} ${item.line_from} ${item.line_to}`}
-              />
-            ))}
+            {projectRepo &&
+              data?.result.map((item) => (
+                <CodeContainer
+                  {...item}
+                  projectRepo={projectRepo}
+                  key={`${item.context.snippet} ${item.line_from} ${item.line_to}`}
+                />
+              ))}
           </Box>
         </Box>
       )}
@@ -154,11 +156,14 @@ export default function Main() {
               fit="contain"
             />
             <Title order={3} className={classes.heading}>
-              <span className={classes.headingHighlight}>Code Search</span> Code
-              search with AI
+              <span className={classes.headingHighlight}>Code Search with AI</span>
             </Title>
             <Text className={classes.subHeading}>
-              Code Explorer: Code search with AI
+              Welcome to my code. Get started by entering a query.
+            </Text>
+            <Text className={classes.subHeading}>
+              Instantly understand my GitHub repositories—AI explains the why,
+              what, and how.
             </Text>
           </Box>
         </>

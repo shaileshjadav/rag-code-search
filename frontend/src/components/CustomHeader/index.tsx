@@ -10,7 +10,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./CustomHeader.module.css";
 import { Logo } from "../Logo";
-import { IconBrandGithub } from "@tabler/icons-react";
+import {UserAvatar } from "../Avatar";
 
 export function CustomHeader() {
   const [opened, handlers] = useDisclosure(false);
@@ -18,8 +18,18 @@ export function CustomHeader() {
   return (
     <header className={classes.header}>
       <Container size="lg" className={classes.inner}>
-        <Logo size={35} />
-        
+          <Logo size={35} />
+          <Group gap={5} wrap="nowrap">
+            <Button
+              color="Neutral.6"
+              variant="subtle"
+              className={classes.link}
+              onClick={handlers.open}
+            >
+              About
+            </Button>
+            <UserAvatar githubUserName="shaileshjadav" profileLetters="SJ"/>
+         </Group>
       </Container>
       <Modal opened={opened} onClose={handlers.close} centered size={"lg"}>
         <Modal.Header
@@ -37,7 +47,7 @@ export function CustomHeader() {
             work?
           </Title>
           <Text className={classes.subHeading}>
-            This demo uses code of my repo to perform a semantic search.
+            This demo uses code of my github project repo to perform a semantic search.
           </Text>
         </Modal.Header>
         <Modal.Body
@@ -47,11 +57,11 @@ export function CustomHeader() {
             alignItems: "center",
           }}
         >
+
           <Text size="lg" color="dimmed" className={classes.description}>
-            When you search a codebase, you might have the following objectives:
-            To find code snippets similar to what you're using, or to identify a method
-            that does <b>this specific thing</b>. Our code search demo supports
-            both cases with multiple embedding models.
+            When exploring my own codebase, my objective is to quickly recall why I wrote a
+            specific function or how a particular feature works. <b>Code Explorer</b> helps with this by
+            using embedding AI models to provide clear explanations and insights into my work.
           </Text>
 
           <Image src="/workflow.svg" />
