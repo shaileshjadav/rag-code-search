@@ -8,7 +8,7 @@ import json
 from backend.helper.embeddings import get_embedding
 
 from backend.config import QDRANT_URL, QDRANT_API_KEY, DATA_DIR
-
+from backend.model.encoder import UniXcoderEmbeddingsProvider
 
 code_keys = [
     "code_snippet",
@@ -25,7 +25,8 @@ def encode_and_upload(repo_name):
     client = qdrant_client.QdrantClient(
         url=QDRANT_URL
     )
-    
+    encoder = UniXcoderEmbeddingsProvider()
+
     # collection name is equals to repo_name for multiple projects supports
     collection_name = get_collection_name(repo_name)
     input_file = Path(DATA_DIR) / "qdrant_snippets.jsonl"
@@ -47,7 +48,9 @@ def encode_and_upload(repo_name):
             if body is None or len(body) == 0:
                 continue
 
-            embedding = get_embedding(body, docstring)
+            # embedding = get_embedding(body, docstring)
+            embedding = encoder.embed_code(body, docstring)
+            print(f"Embedding: {embedding}")
             embeddings.append(embedding)
 
     payloads = []

@@ -8,6 +8,7 @@ import qdrant_client
 from backend.helper.postprocessing import merge_search_results
 from backend.helper.upload_code import get_collection_name as get_code_collection_name
 from backend.helper.upload_signatures import get_collection_name as get_signatures_collection_name
+from backend.model.encoder import UniXcoderEmbeddingsProvider
 
 class CodeSearcher:
     
@@ -18,7 +19,9 @@ class CodeSearcher:
 
     def search(self, query, projectRepo, limit=5) -> List[dict]:
         print(self, query)
-        vector = get_embedding(query, query)
+        # get_embedding(query, query)
+        encoder = UniXcoderEmbeddingsProvider()
+        vector = encoder.embed_code(query, query) 
         result = self.client.search(
             collection_name=projectRepo,
             query_vector=vector,

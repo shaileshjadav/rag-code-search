@@ -81,7 +81,6 @@ def convert():
                 # Skip ranges that are too far out (likely from external libraries)
                 if start_line >= len(doc_lines):
                     continue
-                
                 # Extract code snippet
                 if start_line == end_line:
                     # Single line range
