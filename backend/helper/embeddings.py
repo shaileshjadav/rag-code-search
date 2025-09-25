@@ -30,4 +30,5 @@ client = OpenAI(
 
 def get_embedding(text: str, docstring: str):
     resp = client.embeddings.create(model=MODEL, input=text)
+    # return resp.data[0].embedding
     return normalize_l2(resp.data[0].embedding[:ENCODER_SIZE])

@@ -104,7 +104,7 @@ export function CodeContainer(props: CodeContainerProps) {
         <Button
           component="a"
           variant="transparent"
-          href={`https://github.com/shaileshjadav/${props.projectRepo}/blob/master/${context.file_path}#L${props.line_from}-L${props.line_to}`}
+          href={`https://github.com/shaileshjadav/${props.projectRepo}/blob/main/${context.file_path}#L${props.line_from}-L${props.line_to}`}
           target="_blank"
           rightSection={
             <ThemeIcon

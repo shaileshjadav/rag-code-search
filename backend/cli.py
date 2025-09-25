@@ -16,6 +16,9 @@ from backend.config import DATA_DIR
 def index_repo(repo_path):
     repo_abs_path = os.path.abspath(repo_path)  # ensure absolute path
     repo_name = os.path.basename(repo_path)
+    if not repo_name:
+        raise ValueError(f"Repo name could not be determined from path: {repo_path}")
+    
     print(f"📂 Indexing repo {repo_name} at {repo_path}")
     files_to_json.main(repo_path)
     generate_lsif(repo_abs_path, 'ts')

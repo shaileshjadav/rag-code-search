@@ -19,9 +19,11 @@ class CodeSearcher:
 
     def search(self, query, projectRepo, limit=5) -> List[dict]:
         print(self, query)
-        # get_embedding(query, query)
+        
         encoder = UniXcoderEmbeddingsProvider()
         vector = encoder.embed_code(query, query) 
+        # vector = get_embedding(query, query)
+
         result = self.client.search(
             collection_name=projectRepo,
             query_vector=vector,

@@ -1,5 +1,37 @@
 from collections import defaultdict
 from typing import List
+import os
+
+def parse_code_search_result(results: List[dict]):
+    "Parse code search results same as NLU search results"
+    print(results)
+    if not results:
+        return {}
+
+    file_path = results[0]["file"]
+    
+    # min_start = min(item["start_line"] for item in results)
+    # max_end = max(item["end_line"] for item in results)
+    # merged_snippet = "\n".join(item["code_snippet"] for item in results)
+    module_name = os.path.splitext(os.path.basename(file_path))[0]
+    
+    parsed_result = {
+        "name":None,
+        "signature":None,
+        "code_type":None,
+        "docstring":None,
+        "line":results[0]["start_line"],
+        "line_from":results[0]["start_line"],
+        "line_to":results[0]["end_line"],
+        "context": {
+            "module": module_name,
+            "file_path":file_path,
+            "file_name": os.path.basename(file_path),
+            "struct_name": None,
+            "snippet": results[0]["code_snippet"],
+        },
+    }
+    return parsed_result
 
 
 def merge_search_results(code_search_result: List[dict], nlu_search_result: List[dict]) -> List[dict]:
@@ -36,20 +68,36 @@ def merge_search_results(code_search_result: List[dict], nlu_search_result: List
                     }
                 ]
     """
-
+    # group code search results by file
     code_search_result_by_file = defaultdict(list)
     for hit in code_search_result:
         code_search_result_by_file[hit["file"]].append(hit)
-    for nlu_search_hit in nlu_search_result:
-        file = nlu_search_hit["context"]["file_path"]
-        if file in code_search_result_by_file:
-            nlu_search_hit["sub_matches"] = try_merge_overlapping_snippets(
-                code_search_result_by_file[file],
-                nlu_search_hit
-            )
-    nlu_search_result = sorted(nlu_search_result, key=lambda x: -len(x.get('sub_matches', [])))
+    
+    # merge code search results with NLU search results
+    results = []
+    
 
-    return nlu_search_result
+    for nlu_search_hit in nlu_search_result:
+        results.append(nlu_search_hit)
+
+        
+    for hit in code_search_result_by_file:
+        results.append(parse_code_search_result(code_search_result_by_file[hit]))
+    return results
+
+    # code_search_result_by_file = defaultdict(list)
+    # for hit in code_search_result:
+    #     code_search_result_by_file[hit["file"]].append(hit)
+    # for nlu_search_hit in nlu_search_result:
+    #     file = nlu_search_hit["context"]["file_path"]
+    #     if file in code_search_result_by_file:
+    #         nlu_search_hit["sub_matches"] = try_merge_overlapping_snippets(
+    #             code_search_result_by_file[file],
+    #             nlu_search_hit
+    #         )
+    # nlu_search_result = sorted(nlu_search_result, key=lambda x: -len(x.get('sub_matches', [])))
+
+    # return nlu_search_result
 
 
 
