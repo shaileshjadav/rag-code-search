@@ -1,8 +1,8 @@
 import axios from 'axios';
+import {BASE_URL} from "./constants";
 
-const baseURL =  'http://localhost:8081';
 
-const instance = axios.create({ baseURL, validateStatus: () => true });
+const instance = axios.create({ baseURL: BASE_URL, validateStatus: () => true });
 
 instance.interceptors.request.use(
 	(request) => {

@@ -18,7 +18,7 @@ def normalize_l2(x):
 
 
 MODEL = ENCODER_NAME  # local llm
-print(GEMINI_API_KEY)
+# print(GEMINI_API_KEY)
 client = OpenAI(
   # host='http://127.0.0.1:11434',
   # headers={'x-some-header': 'some-value'}

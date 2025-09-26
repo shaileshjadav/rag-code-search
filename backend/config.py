@@ -23,7 +23,7 @@ ENCODER_NAME = "all-minilm:l6-v2"
 ENCODER_SIZE = 384
 
 # testing folder path for specific folder
-TEST_FOLDER_PATH = './backend/twitter-fullstack'
+TEST_FOLDER_PATH =  os.environ.get('TEST_REPO_PATH', './backend/twitter-fullstack')
 SUPPORTED_LANGUAGES = [ '.js', '.ts', '.jsx', '.tsx']
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY" , None)

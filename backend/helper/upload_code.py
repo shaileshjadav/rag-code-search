@@ -50,7 +50,6 @@ def encode_and_upload(repo_name):
 
             # embedding = get_embedding(body, docstring)
             embedding = encoder.embed_code(body, docstring)
-            print(f"Embedding: {embedding}")
             embeddings.append(embedding)
 
     payloads = []

@@ -49,8 +49,8 @@ export default function Main() {
   });
   const selectData = useMemo(
     () => [
-      { value: "dom-unique-selector", label: "Dom Unique selector" },
       { value: "twitter-fullstack", label: "Twitter full stack" },
+      { value: "dom-unique-selector", label: "Dom Unique selector" },
     ],
     []
   );

@@ -5,7 +5,6 @@ from backend.helper.embeddings import get_embedding
 def read_repo_files(repo_path, exts=(".py", ".js", ".ts")):
     """Recursively read repo files with specific extensions"""
 
-    print(f"Indexed {repo_path}")
     all_files = []
     for root, _, files in os.walk(repo_path):
         for f in files:

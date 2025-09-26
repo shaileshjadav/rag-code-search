@@ -4,7 +4,7 @@ import os
 
 def parse_code_search_result(results: List[dict]):
     "Parse code search results same as NLU search results"
-    print(results)
+    
     if not results:
         return {}
 
@@ -111,7 +111,6 @@ def merge_search_results(code_search_result: List[dict], nlu_search_result: List
         results.append(nlu_search_hit)
         file = nlu_search_hit["context"]["file_path"]
         if file in code_search_result_by_file:
-            print(file, code_search_result_by_file[file])        
             merged = try_merge_overlapping_snippets(code_search_result_by_file[file], nlu_search_hit)
             if len(merged) <= 0:
                 results.append(parse_code_search_result(code_search_result_by_file[file]))

@@ -54,7 +54,6 @@ def process_file(root_dir, file_path):
 
 def explore_directory(root_dir):
     result = []
-    print(f"Exploring directory: {root_dir}")
     print(f"Looking for files with extensions: {SUPPORTED_LANGUAGES}")
     
     for foldername, subfolders, filenames in os.walk(root_dir):
