@@ -205,9 +205,9 @@ def convert():
                 {
                         # "file": str(Path(str(rdoc_uri).replace("file://", "")).relative_to(Path(root_dir).absolute())) if root_dir else str(rtext_path),
                     "file": str(get_relative_path(rtext_path, root_dir.resolve())),
-                    "start_line": rs["line"], 
+                    "start_line": rs["line"] + 1, #+1 for proper line number
                     "start_character": rs["character"],
-                    "end_line": re_["line"],
+                    "end_line": re_["line"] + 1 ,
                     "end_character": re_["character"],
                     "code_snippet": "\n".join(r_lines[rs["line"] : re_["line"] + 1]),
                 }

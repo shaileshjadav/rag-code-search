@@ -69,22 +69,23 @@ def merge_search_results(code_search_result: List[dict], nlu_search_result: List
                 ]
     """
     # group code search results by file
-    code_search_result_by_file = defaultdict(list)
-    for hit in code_search_result:
-        code_search_result_by_file[hit["file"]].append(hit)
+    # code_search_result_by_file = defaultdict(list)
+    # for hit in code_search_result:
+    #     code_search_result_by_file[hit["file"]].append(hit)
     
-    # merge code search results with NLU search results
-    results = []
-    
+    # Logic -1 merge code search results with NLU search results
+    # results = []
 
-    for nlu_search_hit in nlu_search_result:
-        results.append(nlu_search_hit)
+    # for nlu_search_hit in nlu_search_result:
+    #     results.append(nlu_search_hit)
 
         
-    for hit in code_search_result_by_file:
-        results.append(parse_code_search_result(code_search_result_by_file[hit]))
-    return results
+    # for hit in code_search_result_by_file:
+    #     results.append(parse_code_search_result(code_search_result_by_file[hit]))
+    #     print(code_search_result_by_file[hit])
+    # return results
 
+    # logic -2 Merge code search results but base is nlu search results
     # code_search_result_by_file = defaultdict(list)
     # for hit in code_search_result:
     #     code_search_result_by_file[hit["file"]].append(hit)
@@ -99,6 +100,22 @@ def merge_search_results(code_search_result: List[dict], nlu_search_result: List
 
     # return nlu_search_result
 
+
+    # Logic -3 merge search results but remove duplicates
+    results = []
+    code_search_result_by_file = defaultdict(list)
+    for hit in code_search_result:
+        code_search_result_by_file[hit["file"]].append(hit)
+    
+    for nlu_search_hit in nlu_search_result:
+        results.append(nlu_search_hit)
+        file = nlu_search_hit["context"]["file_path"]
+        if file in code_search_result_by_file:
+            print(file, code_search_result_by_file[file])        
+            merged = try_merge_overlapping_snippets(code_search_result_by_file[file], nlu_search_hit)
+            if len(merged) <= 0:
+                results.append(parse_code_search_result(code_search_result_by_file[file]))
+    return results
 
 
 def try_merge_overlapping_snippets(code_search_results: List[dict], nlu_search_result: dict) -> List[dict]:
