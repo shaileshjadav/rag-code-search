@@ -149,6 +149,3 @@ To support additional programming languages:
 
 For verbose output, you can modify the logging level in the configuration files.
 
-## License
-
-[Add your license information here]

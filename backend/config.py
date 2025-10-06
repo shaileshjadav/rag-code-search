@@ -26,6 +26,6 @@ ENCODER_SIZE = 384
 TEST_FOLDER_PATH =  os.environ.get('TEST_REPO_PATH', './backend/twitter-fullstack')
 SUPPORTED_LANGUAGES = [ '.js', '.ts', '.jsx', '.tsx']
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY" , None)
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", None)
+# OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY" , None)
+# GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", None)
 # ENCODER_NAME = "text-embedding-3-small"

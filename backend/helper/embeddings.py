@@ -1,6 +1,6 @@
 import os
 from ollama import Client
-from backend.config import ENCODER_NAME, GEMINI_API_KEY, ENCODER_SIZE
+from backend.config import ENCODER_NAME, ENCODER_SIZE
 from openai import OpenAI
 import numpy as np
 
@@ -18,7 +18,7 @@ def normalize_l2(x):
 
 
 MODEL = ENCODER_NAME  # local llm
-# print(GEMINI_API_KEY)
+
 client = OpenAI(
   # host='http://127.0.0.1:11434',
   # headers={'x-some-header': 'some-value'}

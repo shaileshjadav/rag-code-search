@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  rag_code_search:
+    build: ./backend
+    container_name: rag_code_search
+    environment:
+      - QDRANT_URL
+      - QDRANT_API_KEY
+      - TEST_REPO_PATH
+    ports:
+      - 8081:8081
+
