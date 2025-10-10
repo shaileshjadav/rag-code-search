@@ -1,6 +1,6 @@
 import { Anchor, Avatar, Menu } from "@mantine/core";
 import { IconBrandGithub, IconReportAnalytics } from "@tabler/icons-react";
-import classes from "./avatar.module.css"
+import classes from "./Avatar.module.css"
 
 type AvatarProps = {
     githubUserName:string,
