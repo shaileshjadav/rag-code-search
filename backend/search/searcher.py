@@ -1,7 +1,7 @@
 import json
 from typing import List
 
-from backend.config import QDRANT_URL, ENCODER_NAME
+from backend.config import QDRANT_API_KEY, QDRANT_URL, ENCODER_NAME
 from backend.helper.embeddings import get_embedding
 import qdrant_client
 
@@ -14,7 +14,8 @@ class CodeSearcher:
     
     def __init__(self):
         self.client = qdrant_client.QdrantClient(
-        url= QDRANT_URL
+        url= QDRANT_URL,
+        api_key= QDRANT_API_KEY
     )
 
     def search(self, query, projectRepo, limit=5) -> List[dict]:
@@ -37,7 +38,7 @@ class CodeSearcher:
 class NluSearcher:
 
     def __init__(self):
-        self.client = qdrant_client.QdrantClient(url= QDRANT_URL)
+        self.client = qdrant_client.QdrantClient(url= QDRANT_URL,  api_key=QDRANT_API_KEY)
         
 
     def search(self, query, projectRepo, limit=5) -> List[dict]:

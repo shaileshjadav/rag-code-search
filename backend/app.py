@@ -3,9 +3,9 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from starlette.staticfiles import StaticFiles
+# from starlette.staticfiles import StaticFiles
 
-from backend.config import ROOT_DIR
+# from backend.config import ROOT_DIR
 # from backend.helper.get_file import FileGet
 from backend.search.searcher import CombinedSearcher
 
@@ -36,7 +36,7 @@ async def search(query: str, projectRepo: str):
 #     }
 
 
-app.mount("/", StaticFiles(directory=os.path.join(ROOT_DIR, 'frontend', 'dist'), html=True))
+# app.mount("/", StaticFiles(directory=os.path.join(ROOT_DIR, 'frontend', 'dist'), html=True))
 
 if __name__ == "__main__":
     import uvicorn

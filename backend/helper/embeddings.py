@@ -1,8 +1,9 @@
-import os
-from ollama import Client
+# import os
+# from ollama import Client
 from backend.config import ENCODER_NAME, ENCODER_SIZE
-from openai import OpenAI
+# from openai import OpenAI
 import numpy as np
+from sentence_transformers import SentenceTransformer
 
 
 def normalize_l2(x):
@@ -19,16 +20,19 @@ def normalize_l2(x):
 
 MODEL = ENCODER_NAME  # local llm
 
-client = OpenAI(
-  # host='http://127.0.0.1:11434',
-  # headers={'x-some-header': 'some-value'}
-  base_url = "http://localhost:11434/v1",
-  api_key='ollama', # required, but unused
-  # api_key= GEMINI_API_KEY,
-  # base_url='https://generativelanguage.googleapis.com/v1beta/openai/',
-)
+# client = OpenAI(
+#   # host='http://127.0.0.1:11434',
+#   # headers={'x-some-header': 'some-value'}
+#   base_url = "http://localhost:11434/v1",
+#   api_key='ollama', # required, but unused
+#   # api_key= GEMINI_API_KEY,
+#   # base_url='https://generativelanguage.googleapis.com/v1beta/openai/',
+# )
 
 def get_embedding(text: str, docstring: str):
-    resp = client.embeddings.create(model=MODEL, input=text)
+    # resp = client.embeddings.create(model=MODEL, input=text)
+    model = SentenceTransformer(f"sentence-transformers/{MODEL}")
+    embedding = model.encode(text)
+    return normalize_l2(embedding[:ENCODER_SIZE])
     # return resp.data[0].embedding
-    return normalize_l2(resp.data[0].embedding[:ENCODER_SIZE])
+    # return normalize_l2(resp.data[0].embedding[:ENCODER_SIZE])

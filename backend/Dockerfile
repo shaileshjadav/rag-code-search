@@ -1,3 +1,5 @@
+
+# Node.js builder for LSIF generation
 FROM node:current as builder
 
 # install lsif-tsc as dependency for generate lsif file
@@ -9,22 +11,35 @@ COPY tools/package*.json ./tools/
 # Install deps inside tools
 RUN cd tools && npm install
 
+
+# syntax=docker/dockerfile:1.4
 FROM python:3.10-slim
 
-# Copy only requirements to cache them in docker layer
-WORKDIR /code
-COPY requirements.txt /code/
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# Project initialization:
-RUN pip install -r requirements.txt
+WORKDIR /app
 
-# Install pre-trained models here
+# Context is backend/, so requirements.txt is at root of context
+COPY requirements.txt .
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
+
 # Example:
 RUN python -c 'from sentence_transformers import SentenceTransformer; SentenceTransformer("all-MiniLM-L6-v2");'
 # TODO: Verify it
 RUN python -c 'from transformers import RobertaTokenizer, RobertaModel, RobertaConfig; RobertaTokenizer.from_pretrained("microsoft/unixcoder-base") ; RobertaModel.from_pretrained("microsoft/unixcoder-base") ; RobertaConfig.from_pretrained("microsoft/unixcoder-base");'
+  
 
-# Creating folders, and files for a project:
-COPY . /code
+# Copy the backend folder content only
+COPY . /app/backend
 
-CMD uvicorn app:app --host 0.0.0.0 --port 8081
+# Ensure Python sees repo root equivalent
+ENV PYTHONPATH=/app
+EXPOSE 8081
+
+CMD ["python", "-m", "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8081"]
+
+

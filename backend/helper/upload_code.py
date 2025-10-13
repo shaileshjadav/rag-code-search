@@ -23,7 +23,8 @@ def get_collection_name(repo_name):
 
 def encode_and_upload(repo_name):
     client = qdrant_client.QdrantClient(
-        url=QDRANT_URL
+        url=QDRANT_URL,
+        api_key=QDRANT_API_KEY
     )
     encoder = UniXcoderEmbeddingsProvider()
 
