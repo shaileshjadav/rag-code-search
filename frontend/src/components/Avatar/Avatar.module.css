@@ -1,0 +1,13 @@
+.link {
+    text-decoration: none;
+    color: light-dark(
+      var(--mantine-color-neutral-6),
+      var(--mantine-color-dark-0)
+    );
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+  
+    @mixin hover {
+      background-color: none
+    }
+  }

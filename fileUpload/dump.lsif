@@ -1,4 +1,0 @@
-{"id":1,"type":"vertex","label":"metaData","version":"0.4.3","projectRoot":"file:///mnt/e/testing-demo/rag-code-search","positionEncoding":"utf-16","toolInfo":{"name":"lsif-tsc","args":["**/*.js","--AllowJs","--checkJs"],"version":"0.7.6"}}
-{"id":2,"type":"vertex","label":"project","kind":"typescript"}
-{"id":3,"type":"vertex","label":"$event","kind":"begin","scope":"project","data":2}
-{"id":4,"type":"vertex","label":"$event","kind":"end","scope":"project","data":2}
