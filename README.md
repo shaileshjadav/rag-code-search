@@ -16,9 +16,11 @@ A code search and indexing tool that uses LSIF (Language Server Index Format) an
 - Qdrant server running (default: http://localhost:6333)
 
 ## Demo
-<video width="100%" controls controlsList="nodownload">
-    <source src="./demo.mp4" type="video/mp4">
-</video>
+
+
+
+https://github.com/user-attachments/assets/07dd3abd-348b-4297-95f3-460f5cd163c3
+
 
 ## Installation
 
