@@ -31,7 +31,7 @@ def clean_data_files():
     ## iterate all files in data directory excluding .keep file
     for file in os.listdir(DATA_DIR):
         if file != ".keep":
-            print(f"Removing {file}")
+            # print(f"Removing {file}")
             os.remove(os.path.join(DATA_DIR, file))
 
 
