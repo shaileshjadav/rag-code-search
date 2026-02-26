@@ -114,7 +114,7 @@ QDRANT_URL=http://localhost:6333
 QDRANT_API_KEY=your_api_key_here
 ```
 
-### Working
+## Working
 
 #### Indexing
 
