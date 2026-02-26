@@ -17,7 +17,7 @@ A code search and indexing tool that uses LSIF (Language Server Index Format) an
 
 ## Demo
 <video width="100%" controls controlsList="nodownload">
-    <source src="demo.mp4" type="video/mp4">
+    <source src="./demo.mp4" type="video/mp4">
 </video>
 
 ## Installation
