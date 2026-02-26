@@ -15,18 +15,17 @@ def uri_to_path(uri: str) -> Path:
     p = urlparse(uri)
     if p.scheme == "file":
         path = unquote(p.path or "")
-        print(f"path: {uri} ->> {Path(os.path.normpath(path))}")
+        # print(f"path: {uri} ->> {Path(os.path.normpath(path))}")
         # On WSL we want /mnt/... unchanged; ensure it's absolute
         return Path(os.path.normpath(path))
     # Fallback: treat the input as a filesystem path
     return Path(os.path.normpath(uri))
 
 def get_relative_path(abs_path: str, root_dir: Path) -> Path:
-    print(f"abs_path: {abs_path}")
-    print(f"root_dir: {root_dir}")
+    
     # If inside WSL (/mnt/..), keep absolute
     if str(abs_path).startswith("/mnt/"):
-        print(f"{abs_path.relative_to(root_dir)}")
+        
         try:
             # Make it relative to root_dir if possible
             return abs_path.relative_to(root_dir)
@@ -159,7 +158,7 @@ def convert():
             de = def_range["end"]
             def_snippet = "\n".join(doc_lines[ds["line"] : de["line"] + 1])
 
-            print(f"def_snippet: {def_snippet}, start: {ds}, end: {de}")
+            # print(f"def_snippet: {def_snippet}, start: {ds}, end: {de}")
             
             refs = []
             for rrid in ref_range_ids:

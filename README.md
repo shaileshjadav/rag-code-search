@@ -15,6 +15,11 @@ A code search and indexing tool that uses LSIF (Language Server Index Format) an
 - Node.js (for LSIF generation)
 - Qdrant server running (default: http://localhost:6333)
 
+## Demo
+<video width="100%" controls controlsList="nodownload">
+    <source src="demo.mp4" type="video/mp4">
+</video>
+
 ## Installation
 
 1. Clone the repository:
@@ -108,6 +113,56 @@ Create a `.env` file in the project root:
 QDRANT_URL=http://localhost:6333
 QDRANT_API_KEY=your_api_key_here
 ```
+
+### Working
+
+#### Indexing
+
+**Step 1:** Create a JSON array of objects where each object contains 4 attributes:
+1. `path` - File path
+2. `code` - Array of code lines
+3. `startLine` - Starting line number
+4. `endLine` - Ending line number
+
+
+**Step 2:** Generate LSIF (Language Server Index Format) for the project, which creates a `dump.lsif` file.
+
+> **LSIF** is a standard JSON-based format developed by Microsoft for indexing codebases to provide fast, precise code intelligence (definitions, references, hovers) without needing a running language server. It acts as a serialized dump of a language server's knowledge, allowing IDEs or web interfaces to quickly display code intelligence features like "go to definition".
+
+References:
+- [LSIF Specification](https://lsif.dev/)
+- [Writing an LSIF Indexer](https://sourcegraph.com/blog/writing-an-lsif-indexer)
+- [Language Server Index Format Overview](https://microsoft.github.io/language-server-protocol/overviews/lsif/overview/)
+
+**Step 3:** Parse the LSIF dump file and extract code snippets from range vertices, including character positions for precise code location.
+
+**Step 4:** Run the Babel parser on JavaScript files and generate a list of dictionaries containing:
+- Code snippets
+- Context information
+- Signature types
+
+The Babel parser parses the AST (Abstract Syntax Tree) of the code and creates JSON signatures.
+
+**Step 5:** Create vector embeddings from the parsed LSIF dump file and save them in the Qdrant database.
+
+**Step 6:** Create vector embeddings from AST-parsed data (Babel-parsed JSON) and save them in the database.
+
+#### Indexing Flow
+
+1. Create JSON dump for each file and code snippet
+2. Generate LSIF index for the repository using `lsif-tsc`
+3. Convert LSIF to JSON format (`qdrant_snippets`)
+4. Generate signatures using Babel parser for each file (`signatures.json`)
+5. Upload `qdrant_snippets` and `signatures.json` to the vector store (e.g., Qdrant)
+6. Create two collections of embeddings:
+   - **`{repo}_code`**: Stores code snippets as vector embeddings for code-based search
+   - **`{repo}_signatures`**: Stores AST-generated signatures (converted to natural language embeddings) for semantic search
+
+#### Searching
+
+- **Code Collection Search**: Query against code snippets
+- **Signatures Collection Search**: Query against natural language representations
+- **Result Merging**: Merge overlapping code search results with NLU (Natural Language Understanding) search results for enhanced relevance
 
 ## Development
 
